@@ -31,3 +31,55 @@ public class PotvrzeniEmail {
 		// heslo
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("password")));
+
+		WebElement password_login = driver.findElement(By.name("password"));
+		password_login.clear();
+		password_login.sendKeys("Heslo321");
+		driver.findElement(By.id("passwordNext")).click();
+
+		driver.get("https://mail.google.com/mail/u/0/");
+
+		// kontrola zda jsem na gmailu
+		List<WebElement> list = driver.findElements(By.xpath("//*[contains(text(),'" + "parek" + "')]"));
+		if (list.size() > 0) {
+			System.out.println("Jsem na gmailu");
+		} else {
+			System.out.println("Posral se login");
+			System.exit(0);
+		}
+
+		List<WebElement> listek = driver.findElements(By.xpath("//*[contains(text(),'" + "Heureka.cz" + "')]"));
+		if (listek.size() <= 0) {
+			System.out.println("Email od heureky nenalezen");
+			System.exit(0);
+		} else {
+			System.out.println("Email od heureky nalezen");
+		}
+
+		try {
+
+			Robot robot = new Robot();
+
+			robot.delay(5000);
+			robot.keyPress(KeyEvent.VK_DOWN);
+			robot.keyPress(KeyEvent.VK_ENTER);
+
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
+
+		driver.findElement(By.xpath("//*[contains(text(),'" + "Aktivovat úèet" + "')]")).click();
+
+		List<WebElement> heurekapage = driver.findElements(By.xpath("//*[contains(text(),'" + "Moje Heureka" + "')]"));
+		if (heurekapage.size() <= 0) {
+			System.out.println("Uèet aktivován");
+			System.exit(0);
+		} else {
+			System.out.println("!!! Uèet NEaktivován!!!");
+		}
+
+		System.exit(0);
+
+	}
+
+}
