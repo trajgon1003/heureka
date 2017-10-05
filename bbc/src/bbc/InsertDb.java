@@ -30,9 +30,7 @@ public class InsertDb {
 			// STEP 4: Execute a query
 			System.out.println("Creating statement...");
 			stmt = conn.createStatement();
-			;
-			;
-			;
+		
 			String sql = "SELECT * FROM " + tabulka + " WHERE used=0 ORDER BY id limit 1";
 			ResultSet rs = stmt.executeQuery(sql);
 			// STEP 5: Extract data from result set
